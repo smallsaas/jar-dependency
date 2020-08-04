@@ -61,10 +61,10 @@
 - 本地生成Dependencies JSON格式？
     - 使用maven-dependency-tree-parser工具生成
 
-- 云端**依赖（Dependency）**如何存储？
+- 云端 **依赖（Dependency）** 如何存储？
     - MySQL
     - JSON
-- **依赖（Dependency）**比对的逻辑
+- **依赖（Dependency）** 比对的逻辑
     - 如何处理目标Jar包不存在Standalone依赖情况？
         - 返回缺失信息
     - 如何处理Standalone依赖缺失目标Jar包依赖情况？
