@@ -16,8 +16,13 @@ G --> H[写入Database]
 ```
 
 - 本地用户根据DenpendencyUtil.jar包工具生成目标Jar包的**Dependency JSON**；
+
 - 用户根据**Denpendency JSON**调用下述`/api/jar/dependencies/{id}/negotiation`接口获取依赖匹配情况；
-- 用户根据上述接口返回信息处理完成后，调用下述`/api/jar/dependencies/{id}/inject`并重新上传**Dependency JSON**完成依赖装配；
+
+- 用户根据上述接口返回信息处理完成后，调用下述`/api/jar/dependencies/{id}/inject`并上传**Dependency JSON**完成依赖装配；
+
+    >**TODO：`/api/jar/dependencies/{id}/inject`接口可能存在数据破坏情况，即当前接口未进行常规依赖安全检查，后续可进行完善。**
+
 - 用户可通过`/api/jar/dependencies/{id}`接口获取最新**Dependency JSON**内容。
 
 ## 2. 主要方法
