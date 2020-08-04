@@ -4,16 +4,7 @@
 
 ## 1. 流程
 
-```mermaid
-graph TD
-A[待装配依赖JSON] --> B{检测依赖是否规范}
-B --> |规范且依赖读取正常| C[读取Standalone Jar包依赖]
-B --> |非法依赖或格式错误| D(游戏结束)
-C --> E{检测是否缺失依赖}
-E --> |缺失依赖|D
-E --> |依赖正常|G[生成Dependency JSON]
-G --> H[写入Database]
-```
+![UTOOLS1596534340834.png](https://img03.sogoucdn.com/app/a/100520146/301f910e0d49c0ed0c4dc8ed301dbdcf)
 
 - 本地用户根据DenpendencyUtil.jar包工具生成目标Jar包的**Dependency JSON**；
 
