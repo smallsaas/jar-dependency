@@ -23,7 +23,7 @@
 |              **请求路径**              | **请求方法** |      **请求参数**      |                    **说明**                     |
 | :------------------------------------: | :----------: | :--------------------: | :---------------------------------------------: |
 |   /api/jar/dependencies/{id}/inject    |   **POST**   | **详见下部分请求JSON** | 上传Dependency JSON，由接口进行分析、判断及注入 |
-|       /api/jar/dependencies/{id}       |   **GET**    |           无           |       获取依赖（Dependency）详情（JSON）        |
+|       /api/jar/dependencies/{id}       |   **GET**    |           记录ID           |       根据记录ID获取依赖（Dependency）详情（JSON）        |
 | /api/jar/dependencies/{id}/negotiation |   **POST**   | **详见下部分请求JSON** |            返回匹配依赖与不匹配依赖             |
 
 - **请求JSON**
