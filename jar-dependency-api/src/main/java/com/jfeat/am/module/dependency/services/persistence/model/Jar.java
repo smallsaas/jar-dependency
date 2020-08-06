@@ -11,13 +11,16 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.Accessors;
 
 /**
@@ -52,6 +55,7 @@ public class Jar extends Model<Jar> {
     /**
      * JAR包依赖
      */
+    @JsonIgnore
     private String dependencies;
 
     /**

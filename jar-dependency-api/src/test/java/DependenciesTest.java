@@ -23,8 +23,8 @@ public class DependenciesTest {
     private JarServiceImpl jarService;
     @Test
     public void test(){
-        Jar jar = jarService.selectByAppId("UjQhM2mOOR7I");
+        /*Jar jar = jarService.selectByAppId("UjQhM2mOOR7I");
         JSONObject originDependencies = JSONObject.parseObject(jar.getDependencies());
-        System.out.println(JSONArray.parseArray(originDependencies.getString("dependencies")));
+        System.out.println(JSONArray.parseArray(originDependencies.getString("dependencies")));*/
     }
 }

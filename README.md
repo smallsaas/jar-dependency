@@ -14,14 +14,14 @@
 
     >**TODO：`/api/jar/dependencies/inject`接口可能存在数据破坏情况，即当前接口未进行常规依赖安全检查，后续可进行完善。**
 
-- 用户可通过`/api/jar/dependencies/{appid}`接口获取最新**Dependency JSON**内容。
+- 用户可通过`/api/jar/dependencies/{appId}`接口获取最新**Dependency JSON**内容。
 
 ## 2. API接口
 
 |              **请求路径**              | **请求方法** |      **请求参数**      |                    **说明**                     |
 | :------------------------------------- | :----------: | :--------------------: | :---------------------------------------------- |
 |   /api/jar/dependencies/inject    |   **POST**   | **详见下部分请求JSON** | 上传待注入的依赖(Dependency) JSON，由本接口进行分析、判断及注入 |
-|       /api/jar/dependencies/{appid}       |   **GET**    |           应用标识ID           |     根据应用标识ID获取依赖（Dependency）详情（JSON）      |
+|       /api/jar/dependencies/{appId}       |   **GET**    |           应用标识ID           |     根据应用标识ID获取依赖（Dependency）详情（JSON）      |
 | /api/jar/dependencies/match |   **POST**   | **详见下部分请求JSON** | 返回上传的JAR包依赖中与源JAR包中不匹配的依赖 |
 | /api/jar/dependencies/matchSame | **POST** | **详见下部分请求JSON** | 返回上传的JAR包依赖中与源JAR包中匹配的依赖 |
 
@@ -55,7 +55,157 @@
 | create_time  |   datetime   | 记录创建时间  |
 | update_time  |   datetime   | 记录更新时间  |
 
-## 4. 疑难点
+## 4. 测试用例
+
+### a. 获取依赖信息
+
+根据应用标识ID获取依赖（Dependency）详情（JSON）。
+
+
+- **请求方式：GET**
+- **请求地址：<u>/api/jar/dependencies/{appId}</u>**
+
+> ***注：此处标注的占位符{appId}，为需要替换的 变量量，根据实际获取值更新。其它接口也将采用相同的标注，后续将不再声明。***
+
+
+- **参数说明：**
+
+| **参数** | **必须** |      **说明**      |
+| :------: | :------: | :----------------: |
+|  appId   |    是    | 待查询的应用标识ID |
+
+- **返回结果：** 
+
+```json
+{
+    "code": 200,
+    "message": "Success",
+    "data": {
+        "id": 1,
+        "appId": "UjQhM2mOOR7I",
+        "name": "standalone.jar",
+        "status": "stat",
+        "listDependencies": [
+            "spring-boot-starter-amqp-1.5.6.RELEASE.jar",
+		   ".......................",
+            "activation-1.1.1.jar",
+            "aspectjweaver-1.9.4.jar",
+            "test-inject.jar"
+        ]
+    }
+}
+```
+
+### b. 匹配不同依赖
+
+返回上传的JAR包依赖中与源JAR包中不匹配的依赖。
+
+
+- **请求方式：POST**
+
+- **请求地址：<u>/api/jar/dependencies/match</u>**
+
+- **请求参数：**
+
+```json
+{
+    "appId":"UjQhM2mOOR7I",
+	"dependencies":[
+		"spring-boot-starter-amqp-1.5.6.RELEASE.jar",
+		"spring-boot-starter-1.5.6.RELEASE.jar",
+		"spring-boot-1.5.6.RELEASE.jar",
+		"activation-1.1.1.jar",
+		"aspectjweaver-11.9.4.jar",
+         "1.jar"
+	]
+}
+```
+
+- **返回结果：** 
+
+```json
+{
+    "code": 200,
+    "message": "Success",
+    "data": [
+        "aspectjweaver-11.9.4.jar",
+        "1.jar"
+    ]
+}
+```
+
+### c. 匹配相同依赖
+
+返回上传的JAR包依赖中与源JAR包中匹配的依赖。
+
+
+- **请求方式：POST**
+
+- **请求地址：<u>/api/jar/dependencies/matchSame</u>**
+
+- **请求参数：**
+
+```json
+{
+    "appId":"UjQhM2mOOR7I",
+	"dependencies":[
+		"spring-boot-starter-amqp-1.5.6.RELEASE.jar",
+		"spring-boot-starter-1.5.6.RELEASE.jar",
+		"spring-boot-1.5.6.RELEASE.jar",
+		"activation-1.1.1.jar",
+		"aspectjweaver-11.9.4.jar",
+         "1.jar"
+	]
+}
+```
+
+- **返回结果：** 
+
+```json
+{
+    "code": 200,
+    "message": "Success",
+    "data": [
+        "spring-boot-starter-amqp-1.5.6.RELEASE.jar",
+        "spring-boot-starter-1.5.6.RELEASE.jar",
+        "spring-boot-1.5.6.RELEASE.jar",
+        "activation-1.1.1.jar"
+    ]
+}
+```
+
+### d. 注入依赖
+
+上传待注入的依赖(Dependency) JSON，由本接口进行分析、判断及注入。
+
+
+- **请求方式：POST**
+
+- **请求地址：<u>/api/jar/dependencies/inject</u>**
+
+- **请求参数：**
+
+```json
+{
+    "appId":"UjQhM2mOOR7I",
+	"dependencies":[
+		"test-inject.jar"
+	]
+}
+```
+
+- **返回结果：** 
+
+```json
+{
+    "code": 200,
+    "message": "Success",
+    "data": null
+}
+```
+
+
+## 5. 疑难点
 
 - 本地生成Dependencies JSON格式？<span style="color:green;font-weight:bold">【DONE】</span>
     - 自定义模块 **（jar-dependency-parse）**
