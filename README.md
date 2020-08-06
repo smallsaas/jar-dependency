@@ -55,7 +55,7 @@
 | create_time  |   datetime   | 记录创建时间  |
 | update_time  |   datetime   | 记录更新时间  |
 
-## 4. 测试用例
+## 4. 请求示例
 
 ### a. 获取依赖信息
 
