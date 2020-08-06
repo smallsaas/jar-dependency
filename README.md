@@ -65,7 +65,7 @@
 - **请求方式：GET**
 - **请求地址：<u>/api/jar/dependencies/{appId}</u>**
 
-> ***注：此处标注的占位符{appId}，为需要替换的 变量量，根据实际获取值更新。其它接口也将采用相同的标注，后续将不再声明。***
+> ***注：此处标注的占位符{appId}，为需要替换的 变量，根据实际获取值更新。其它接口也将采用相同的标注，后续将不再声明。***
 
 
 - **参数说明：**
@@ -116,7 +116,7 @@
 		"spring-boot-1.5.6.RELEASE.jar",
 		"activation-1.1.1.jar",
 		"aspectjweaver-11.9.4.jar",
-         "1.jar"
+                "1.jar"
 	]
 }
 ```
@@ -154,7 +154,7 @@
 		"spring-boot-1.5.6.RELEASE.jar",
 		"activation-1.1.1.jar",
 		"aspectjweaver-11.9.4.jar",
-         "1.jar"
+                "1.jar"
 	]
 }
 ```
@@ -189,7 +189,7 @@
 {
     "appId":"UjQhM2mOOR7I",
 	"dependencies":[
-		"test-inject.jar"
+            "test-inject.jar"
 	]
 }
 ```
