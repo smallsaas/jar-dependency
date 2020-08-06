@@ -58,7 +58,7 @@
 ## 4. 疑难点
 
 - 本地生成Dependencies JSON格式？<span style="color:green;font-weight:bold">【DONE】</span>
-    - 自定义模块**（jar-dependency-parse）**
+    - 自定义模块 **（jar-dependency-parse）**
 
 - 云端 **依赖（Dependency）** 如何存储？<span style="color:green;font-weight:bold">【DONE】</span>
     - MySQL -> JSON
