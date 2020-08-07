@@ -55,22 +55,14 @@ public class DependencyEndpoint {
     }
 
     @PostMapping("/match")
-    @ApiOperation(value = "返回上传的JAR包依赖中与源JAR包中不匹配的依赖", response = HashMap.class)
+    @ApiOperation(value = "根据参数请求体参数verbose返回上传的JAR包依赖中与源JAR包中匹配或不匹配的依赖", response = HashMap.class)
     @ApiParam(value = "jarDTO", name = "Jar传输对象")
     public Tip match(@RequestBody JarDTO jarDTO) {
         try {
-            return SuccessTip.create().setData(DependencyUtils.getDifferentDependencies(jarService.selectByAppId(jarDTO.getAppId()).getListDependencies(),jarDTO.getDependencies()));
-        } catch (Exception e) {
-            return ErrorTip.create(BusinessCode.SyntaxError.getCode(), e.getMessage());
-        }
-    }
-
-    @PostMapping("/matchSame")
-    @ApiOperation(value = "返回上传的JAR包依赖中与源JAR包中匹配的依赖", response = HashMap.class)
-    @ApiParam(value = "jarDTO", name = "Jar传输对象")
-    public Tip matchSame(@RequestBody JarDTO jarDTO) {
-        try {
-            return SuccessTip.create().setData(DependencyUtils.getSameDependencies(jarService.selectByAppId(jarDTO.getAppId()).getListDependencies(),jarDTO.getDependencies()));
+            return SuccessTip.create()
+                    .setData(jarDTO.getVerbose()
+                            ? DependencyUtils.getDifferentDependencies(jarService.selectByAppId(jarDTO.getAppId()).getListDependencies(),jarDTO.getDependencies())
+                            : DependencyUtils.getSameDependencies(jarService.selectByAppId(jarDTO.getAppId()).getListDependencies(),jarDTO.getDependencies()));
         } catch (Exception e) {
             return ErrorTip.create(BusinessCode.SyntaxError.getCode(), e.getMessage());
         }

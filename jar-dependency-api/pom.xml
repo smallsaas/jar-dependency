@@ -23,25 +23,12 @@
         <!---only produce, scope provided-->
         <crud-base.version>0.0.1</crud-base.version>
         <crud-dev.version>0.0.1</crud-dev.version>
-<!--        <mybatis-plus.version>3.3.2</mybatis-plus.version>-->
+        <!--        <mybatis-plus.version>3.3.2</mybatis-plus.version>-->
         <projectlombok.version>1.18.8</projectlombok.version>
         <jdk-comelier.version>11</jdk-comelier.version>
     </properties>
 
     <dependencies>
-        <!-- Mybatis Plus -->
-        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
-      <!--  <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
-        </dependency>
-        &lt;!&ndash; https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator &ndash;&gt;
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>${mybatis-plus.version}</version>
-        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -85,30 +72,12 @@
                     <groupId>com.jfeat</groupId>
                     <artifactId>jwt-core</artifactId>
                 </exclusion>
-             <!--   <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatis-plus</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatisplus-spring-boot-starter</artifactId>
-                </exclusion>-->
             </exclusions>
         </dependency>
         <dependency>
             <groupId>com.jfeat</groupId>
             <artifactId>crud-core</artifactId>
             <version>${crud-core.version}</version>
-            <!--<exclusions>
-                <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatis-plus</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatisplus-spring-boot-starter</artifactId>
-                </exclusion>
-            </exclusions>-->
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
@@ -128,6 +97,13 @@
                     <source>${jdk-comelier.version}</source>
                     <target>${jdk-comelier.version}</target>
                     <encoding>utf-8</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${projectlombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 

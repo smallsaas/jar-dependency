@@ -1,9 +1,8 @@
 package com.jfeat.am.module.dependency.services.persistence.dto;
 
-import org.springframework.validation.annotation.Validated;
-
 import java.util.List;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -23,4 +22,8 @@ public class JarDTO {
      * JAR包依赖
      */
     private List<String> dependencies;
+    /**
+     * 匹配方式：true -> 匹配不同（默认） , false -> 匹配相同
+     */
+    private Boolean verbose = true;
 }

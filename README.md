@@ -96,7 +96,7 @@
 }
 ```
 
-### b. 匹配不同依赖
+### b. 匹配依赖
 
 返回上传的JAR包依赖中与源JAR包中不匹配的依赖。
 
@@ -117,7 +117,8 @@
 		"activation-1.1.1.jar",
 		"aspectjweaver-11.9.4.jar",
                 "1.jar"
-	]
+	],
+    "verbose":"true"
 }
 ```
 
@@ -134,47 +135,7 @@
 }
 ```
 
-### c. 匹配相同依赖
-
-返回上传的JAR包依赖中与源JAR包中匹配的依赖。
-
-
-- **请求方式：POST**
-
-- **请求地址：<u>/api/jar/dependencies/matchSame</u>**
-
-- **请求参数：**
-
-```json
-{
-    "appId":"UjQhM2mOOR7I",
-	"dependencies":[
-		"spring-boot-starter-amqp-1.5.6.RELEASE.jar",
-		"spring-boot-starter-1.5.6.RELEASE.jar",
-		"spring-boot-1.5.6.RELEASE.jar",
-		"activation-1.1.1.jar",
-		"aspectjweaver-11.9.4.jar",
-                "1.jar"
-	]
-}
-```
-
-- **返回结果：** 
-
-```json
-{
-    "code": 200,
-    "message": "Success",
-    "data": [
-        "spring-boot-starter-amqp-1.5.6.RELEASE.jar",
-        "spring-boot-starter-1.5.6.RELEASE.jar",
-        "spring-boot-1.5.6.RELEASE.jar",
-        "activation-1.1.1.jar"
-    ]
-}
-```
-
-### d. 注入依赖
+### c. 注入依赖
 
 上传待注入的依赖(Dependency) JSON，由本接口进行分析、判断及注入。
 
