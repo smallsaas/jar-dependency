@@ -22,8 +22,7 @@
 | :------------------------------------- | :----------: | :--------------------: | :---------------------------------------------- |
 |   /api/jar/dependencies/inject    |   **POST**   | **详见下部分请求JSON** | 上传待注入的依赖(Dependency) JSON，由本接口进行分析、判断及注入 |
 |       /api/jar/dependencies/{appId}       |   **GET**    |           应用标识ID           |     根据应用标识ID获取依赖（Dependency）详情（JSON）      |
-| /api/jar/dependencies/match |   **POST**   | **详见下部分请求JSON** | 返回上传的JAR包依赖中与源JAR包中不匹配的依赖 |
-| /api/jar/dependencies/matchSame | **POST** | **详见下部分请求JSON** | 返回上传的JAR包依赖中与源JAR包中匹配的依赖 |
+| /api/jar/dependencies/match |   **POST**   | **详见下部分请求JSON** | 根据参数请求体参数verbose返回上传的JAR包依赖中与源JAR包中匹配或不匹配的依赖 |
 
 - **请求JSON**
 
@@ -37,9 +36,12 @@
 		".......",
 		"activation-1.1.1.jar",
 		"aspectjweaver-1.9.4.jar"
-	]
+	],
+    "verbose":"true"
 }
 ```
+
+其中verbose参数用于匹配`/api/jar/dependencies/match`接口根据参数值返回对应数据，`verbose:true`则返回不匹配依赖，`verbose:false`则返回匹配依赖。
 
 ## 3. 数据表设计
 
