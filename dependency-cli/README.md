@@ -2,7 +2,7 @@
 
 ## 使用方法
 
-提取目录下的`parse-jar-with-dependencies.jar`，随后执行下述Java命令提取Jar包依赖 **（仅支持Spring Boot框架依赖提取）** 。
+提取目录下的`dependencies-cli.jar`，随后执行下述Java命令提取Jar包依赖 **（仅支持Spring Boot框架依赖提取）** 。
 
 ```shell
 Usage: java -jar dependency-cli.jar Options [Variables...]
