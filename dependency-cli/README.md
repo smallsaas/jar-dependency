@@ -1,4 +1,4 @@
-# jar-dependency-parse
+# dependency-cli
 
 ## 使用方法
 
