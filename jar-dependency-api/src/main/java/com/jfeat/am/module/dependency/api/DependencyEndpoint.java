@@ -1,15 +1,13 @@
 package com.jfeat.am.module.dependency.api;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.jfeat.am.module.dependency.services.persistence.dto.JarDTO;
 import com.jfeat.am.module.dependency.services.persistence.model.Jar;
 import com.jfeat.am.module.dependency.services.service.impl.JarServiceImpl;
-import com.jfeat.am.module.dependency.util.DependencyUtils;
 import com.jfeat.crud.base.exception.BusinessCode;
 import com.jfeat.crud.base.tips.ErrorTip;
 import com.jfeat.crud.base.tips.SuccessTip;
 import com.jfeat.crud.base.tips.Tip;
+import com.jfeat.util.DependencyUtils;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,13 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-
-import static java.util.function.Predicate.not;
 
 /**
  * 依赖处理接口

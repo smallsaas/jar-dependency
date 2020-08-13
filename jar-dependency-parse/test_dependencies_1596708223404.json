@@ -1,9 +1,0 @@
-{
-	"dependencies":[
-		"mybatis-plus-2.1.9.jar",
-		"spring-boot-starter-amqp-1.5.6.RELEASE.jar",
-		"spring-boot-starter-aop-1.5.6.RELEASE.jar",
-		"spring-boot-starter-jdbc-1.5.6.RELEASE.jar",
-		"spring-boot-starter-undertow-1.5.6.RELEASE.jar"
-	]
-}

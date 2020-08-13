@@ -1,16 +1,31 @@
 package com.jfeat.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @author zxchengb
@@ -33,6 +48,10 @@ public class FileUtils {
      * JAR包依赖输出文件后缀
      */
     public static final String DEPENDENCIES_OUT_PUT_JSON_FILE_SUFFIX = ".json";
+    /**
+     * POM文件标识
+     */
+    public static final String POM = "pom.xml";
 
     /**
      * 将内容写入目标文件中
@@ -79,26 +98,53 @@ public class FileUtils {
     }
 
     /**
-     * 通过jar包文件解压，获取其依赖包(lib)并生成依赖集合
+     * 格式化JSON数据形式写入目标文件
      *
-     * @param jarFile 目标JAR包
-     * @return java.util.List<java.lang.String>
+     * @param file   目标文件
+     * @param object 待格式化的JSON对象
      */
-    public static List<String> getDependencies(File jarFile) {
-        List<String> dependencies = new ArrayList<>();
-        // 不解压读取压缩包中的文件内容
-        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(jarFile))) {
+    public static boolean writeContextInJSON(File file, JSONObject object) {
+        return FileUtils.writeContext(file, JSON.toJSONString(object, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat));
+    }
+
+    /**
+     * 获取资源文件属性
+     *
+     * @return Properties
+     */
+    public static Properties getProperties() {
+        URL resource = Thread.currentThread().getContextClassLoader().getResource("resources.properties");
+        if (resource != null) {
+            try (InputStream in = resource.openStream()) {
+                Properties props = new Properties();
+                props.load(in);
+                in.close();
+                return props;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 根据JAR包获取POM实体模型对象
+     *
+     * @param jarFile JAR包对象
+     * @return POM实体模型对象
+     */
+    public static Model getPomModelByJar(File jarFile) {
+        // 不解压读取JAR包中的pom实体对象
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(jarFile))){
             ZipEntry zipEntry;
             // 循环遍历压缩包内文件对象
             while ((zipEntry = zis.getNextEntry()) != null) {
-                String name = zipEntry.getName();
-                if (name.startsWith(FileUtils.LIB_JAR_DIR) && name.endsWith(FileUtils.JAR_SUFFIX)) {
-                    dependencies.add(name.replaceFirst(FileUtils.LIB_JAR_DIR, ""));
+                if(zipEntry.getName().contains(POM)){
+                    return new MavenXpp3Reader().read(new ZipFile(jarFile).getInputStream(zipEntry));
                 }
             }
-            return dependencies;
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+        } catch (IOException | XmlPullParserException e) {
+            e.printStackTrace();
         }
         return null;
     }

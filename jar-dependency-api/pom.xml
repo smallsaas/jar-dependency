@@ -26,9 +26,21 @@
         <!--        <mybatis-plus.version>3.3.2</mybatis-plus.version>-->
         <projectlombok.version>1.18.8</projectlombok.version>
         <jdk-comelier.version>11</jdk-comelier.version>
+        <maven-model.version>3.6.3</maven-model.version>
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.maven/maven-model -->
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model</artifactId>
+            <version>${maven-model.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jfeat</groupId>
+            <artifactId>dependency-cli</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
