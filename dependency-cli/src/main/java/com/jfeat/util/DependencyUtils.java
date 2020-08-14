@@ -132,7 +132,7 @@ public class DependencyUtils {
      * @return java.util.List<java.lang.String>
      */
     public static List<String> getDifferentDependencies(List<String> origin, List<String> target) {
-        return target.stream().filter(not(origin::contains)).collect(Collectors.toList());
+        return target.stream().filter(not(origin::contains)).sorted().collect(Collectors.toList());
     }
 
     /**
@@ -143,7 +143,7 @@ public class DependencyUtils {
      * @return java.util.List<java.lang.String>
      */
     public static List<String> getSameDependencies(List<String> origin, List<String> target) {
-        return origin.stream().filter(target::contains).collect(Collectors.toList());
+        return origin.stream().filter(target::contains).sorted().collect(Collectors.toList());
     }
 
     /**
@@ -153,6 +153,6 @@ public class DependencyUtils {
      * @return java.util.List<java.lang.String>
      */
     public static List<String> getErrorDependencies(List<String> target) {
-        return target.stream().filter(not(DependencyUtils::isLegal)).collect(Collectors.toList());
+        return target.stream().filter(not(DependencyUtils::isLegal)).sorted().collect(Collectors.toList());
     }
 }
