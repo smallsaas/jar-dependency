@@ -68,7 +68,7 @@ public class MainMethod {
             if (dependencies != null && !dependencies.isEmpty()) {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("dependencies", dependencies);
-                File jsonFile = new File(".", "parse_".concat(FileUtils.DEPENDENCIES_OUT_PUT_JSON_FILE_PREFIX).concat(String.valueOf(System.currentTimeMillis())).concat(FileUtils.DEPENDENCIES_OUT_PUT_JSON_FILE_SUFFIX));
+                File jsonFile = new File(".", "parse".concat(FileUtils.DEPENDENCIES_OUT_PUT_JSON_FILE_PREFIX).concat(String.valueOf(System.currentTimeMillis())).concat(FileUtils.DEPENDENCIES_OUT_PUT_JSON_FILE_SUFFIX));
                 FileUtils.writeContextInJSON(jsonFile,jsonObject);
                 System.out.println("Found " + dependencies.size() + " dependencies in lib.");
                 System.out.println("SUCCESS output Dependencies JSON in file: " + jsonFile.getAbsolutePath() + "\n");
