@@ -2,12 +2,12 @@
 
 ## 使用方法
 
-提取目录下的`dependencies-cli.jar`，随后执行下述Java命令提取Jar包依赖。
-
 ```shell
-Usage: java -jar dependency-cli.jar Options [Variables...]
+$ bash dependency.sh
 
-用于 Standalone Jar包依赖输出 和 Maven module依赖对比
+Usage: dependency Options [Variables...]
+e.g. dependency -p ./lib/test.jar
+用于Jar包依赖输出 和 Maven module依赖对比
 
 Options:
   -c, --compare [Maven module I] [Maven module II]  对比两个Maven module依赖情况并生成JSON文件
@@ -15,5 +15,5 @@ Options:
   -v, --version  输出当前工具版本信息
 ```
 
-随后可在提示路径下查看生成的JSON文件。
+执行成狗后可在提示路径下查看生成的JSON文件。
 
