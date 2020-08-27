@@ -24,9 +24,13 @@ public class MainMethod {
      */
     private static final String JSON_FLAG = "j";
     /**
+     * Boolean 输出标识
+     */
+    private static final String BOOLEAN_FLAG = "b";
+    /**
      * 对比标识
      */
-    private static final String COMPARE_REGEX = "^-[c][j]?$";
+    private static final String COMPARE_REGEX = "^-[c][jb]?$";
     /**
      * 解析标识
      */
@@ -38,7 +42,7 @@ public class MainMethod {
     /**
      * 选项正则表达式
      */
-    private static final String OPTION_REGEX = "(^-[cp](j)?$)|^-[v]$";
+    private static final String OPTION_REGEX = "^-[c][jb]?$|^-[p](j)?$|^-[v]$";
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -112,9 +116,16 @@ public class MainMethod {
                 final List<String> sameDependencies = DependencyUtils.getSameDependencies(d1, d2);
                 final List<String> leftDifferentDependencies = DependencyUtils.getDifferentDependencies(d2, d1);
                 final List<String> rightDifferentDependencies = DependencyUtils.getDifferentDependencies(d1, d2);
-                var leftName = new File(module_1).getName() + "-mismatches";
-                var rightName = new File(module_2).getName() + "-mismatches";
-                if (option.contains(JSON_FLAG)) {
+                String left = new File(module_1).getName();
+                String right = new File(module_2).getName();
+                var leftName = left + "-mismatches";
+                var rightName = right + "-mismatches";
+                if(option.contains(BOOLEAN_FLAG)){
+                    System.out.println(leftDifferentDependencies.isEmpty());
+                    System.out.println("true: "+ right +" CAN be injected into "+ left +".");
+                    System.out.println("false: "+ right +" CAN'T be injected into "+ left +".");
+                }
+                else if (option.contains(JSON_FLAG)) {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("matches", sameDependencies);
                     jsonObject.put(leftName, leftDifferentDependencies);
