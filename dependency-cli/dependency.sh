@@ -2,9 +2,10 @@
 option=$1
 
 ########dependency-cli.jar path########
-jar_path=$(cd `dirname $0`;pwd)/lib/dependency-cli.jar
-compare='^-[c][jb]?$'
-parse='^-[p][j]?$'
+jar_path=$(dirname $(readlink -f $0))/lib/dependency-cli.jar
+compare='^-c[jb]?$'
+parse='^-p[j]?$'
+download='^-d$'
 version='^-v$'
 #############debug############
 #echo jar_path=${jar_path}
@@ -22,12 +23,14 @@ usage(){
 	
 	Usage: dependency Options [Variables...]
 	e.g. dependency -p ./lib/test.jar
-	用于Jar包依赖输出 和 Maven module依赖对比
+	用于Jar包依赖输出 和 Maven module or Jar依赖对比
 
 	Options:
-	  -c, --compare [Maven module I Path] [Maven module II Path]  对比两个Maven module依赖情况并生成输出为JSON格式
-	  -p, --parse [Jar Path]  解析Jar包依赖并输出
-		   -> -pj --parse To JSON 解析Jar包依赖并输出为JSON格式
+	  -c, --compare </path/to/module1> </path/to/module2> 对比两个Maven module or Jar依赖情况
+        -> -b --boolean 判断module1 / jar1 是否能够装配入 module2 / jar2中
+	  -d  --download 根据参数groupId:artifactId:Version下载依赖文件到当前目录
+	  -j, --JSON 输出为JSON格式
+	  -p, --parse </path/to/the-app.jar> [...]  解析Jar包依赖并输出
 	  -v, --version  输出当前工具版本信息
 	EOF
 	exit
@@ -37,6 +40,7 @@ usage(){
 if [ ! $option ]
 then
 	usage
+	exit
 fi
 
 if [[ "$option" =~ $compare ]]
@@ -48,5 +52,13 @@ then
 elif [[ "$option" =~ $version ]]
 then
 	java -jar $jar_path $*
+elif [[ "$option" =~ $download ]]
+then
+	artifact=$2
+	if [ ! $artifact ]
+	then
+		usage
+		exit
+	fi
+	mvn dependency:get -Dartifact=$artifact -Ddest=./
 fi
-

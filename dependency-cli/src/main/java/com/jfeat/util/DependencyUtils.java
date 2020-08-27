@@ -84,9 +84,11 @@ public class DependencyUtils {
             Set<String> names = new HashSet<>();
             // 循环遍历压缩包内文件对象
             while ((zipEntry = zis.getNextEntry()) != null) {
-                names.add(zipEntry.getName());
+                names.add(zipEntry.getName().replace(FileUtils.LIB_JAR_DIR,""));
             }
-            names.stream().filter(s -> s.startsWith(FileUtils.LIB_JAR_DIR) && s.endsWith(FileUtils.JAR_SUFFIX)).collect(Collectors.toCollection(() -> dependencies));
+            names.stream()
+                    .filter(s -> s.startsWith(FileUtils.LIB_JAR_DIR) && s.endsWith(FileUtils.JAR_SUFFIX))
+                    .collect(Collectors.toCollection(() -> dependencies));
             if (dependencies.isEmpty()) {
                 return getDependenciesByPomModel(FileUtils.getPomModelByJar(jarFile));
             }

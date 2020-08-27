@@ -121,9 +121,9 @@ public class MainMethod {
                 var leftName = left + "-mismatches";
                 var rightName = right + "-mismatches";
                 if(option.contains(BOOLEAN_FLAG)){
-                    System.out.println(leftDifferentDependencies.isEmpty());
-                    System.out.println("true: "+ right +" CAN be injected into "+ left +".");
-                    System.out.println("false: "+ right +" CAN'T be injected into "+ left +".");
+                    boolean result = leftDifferentDependencies.isEmpty();
+                    System.out.println(result);
+                    System.out.println(result ? right +" CAN be injected into "+ left +"." : right +" CAN'T be injected into "+ left +".");
                 }
                 else if (option.contains(JSON_FLAG)) {
                     JSONObject jsonObject = new JSONObject();
