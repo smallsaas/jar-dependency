@@ -6,16 +6,26 @@ import org.apache.maven.model.Parent;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import static java.util.function.Predicate.not;
 
@@ -71,18 +81,20 @@ public class DependencyUtils {
         // 不解压读取压缩包中的文件内容
         try (ZipInputStream zis = new ZipInputStream(new FileInputStream(jarFile))) {
             ZipEntry zipEntry;
+            Set<String> names = new HashSet<>();
             // 循环遍历压缩包内文件对象
             while ((zipEntry = zis.getNextEntry()) != null) {
-                String name = zipEntry.getName();
-                if (name.startsWith(FileUtils.LIB_JAR_DIR) && name.endsWith(FileUtils.JAR_SUFFIX)) {
-                    dependencies.add(name.replaceFirst(FileUtils.LIB_JAR_DIR, ""));
-                }
+                names.add(zipEntry.getName());
+            }
+            names.stream().filter(s -> s.startsWith(FileUtils.LIB_JAR_DIR) && s.endsWith(FileUtils.JAR_SUFFIX)).collect(Collectors.toCollection(() -> dependencies));
+            if (dependencies.isEmpty()) {
+                return getDependenciesByPomModel(FileUtils.getPomModelByJar(jarFile));
             }
             return dependencies;
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
-        return null;
+        return dependencies;
     }
 
     /**
@@ -105,7 +117,7 @@ public class DependencyUtils {
      * @param model 目标POM实体对象
      * @return 依赖集合 List
      */
-    public static List<String> getDependenciesByPomModel(Model model){
+    public static List<String> getDependenciesByPomModel(Model model) {
         if (model != null) {
             List<String> dependencies = new ArrayList<>();
             final Properties properties = model.getProperties();

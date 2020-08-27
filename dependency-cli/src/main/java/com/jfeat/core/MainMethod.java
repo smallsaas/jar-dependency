@@ -96,9 +96,19 @@ public class MainMethod {
      */
     private static void compare(String module_1, String module_2, String option) {
         if (option.matches(COMPARE_REGEX)) {
-            List<String> d1 = DependencyUtils.getDependenciesByPom(new File(module_1.concat(File.separator).concat(FileUtils.POM)));
-            List<String> d2 = DependencyUtils.getDependenciesByPom(new File(module_2.concat(File.separator).concat(FileUtils.POM)));
-            if (d1 != null && d2 != null) {
+            List<String> d1;
+            List<String> d2;
+            if(module_1.endsWith(FileUtils.JAR_SUFFIX)){
+                d1 = DependencyUtils.getDependenciesByJar(new File(module_1));
+            }else{
+                d1 = DependencyUtils.getDependenciesByPom(new File(module_1.concat(File.separator).concat(FileUtils.POM)));
+            }
+            if(module_2.endsWith(FileUtils.JAR_SUFFIX)){
+                d2 = DependencyUtils.getDependenciesByJar(new File(module_2));
+            }else{
+                d2 = DependencyUtils.getDependenciesByPom(new File(module_2.concat(File.separator).concat(FileUtils.POM)));
+            }
+            if (!d1.isEmpty() && !d2.isEmpty()) {
                 final List<String> sameDependencies = DependencyUtils.getSameDependencies(d1, d2);
                 final List<String> leftDifferentDependencies = DependencyUtils.getDifferentDependencies(d2, d1);
                 final List<String> rightDifferentDependencies = DependencyUtils.getDifferentDependencies(d1, d2);
