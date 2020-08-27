@@ -121,7 +121,7 @@ public class MainMethod {
                 var leftName = left + "-mismatches";
                 var rightName = right + "-mismatches";
                 if(option.contains(BOOLEAN_FLAG)){
-                    boolean result = leftDifferentDependencies.isEmpty();
+                    boolean result = rightDifferentDependencies.isEmpty();
                     System.out.println(result);
                     System.out.println(result ? right +" CAN be injected into "+ left +"." : right +" CAN'T be injected into "+ left +".");
                 }
