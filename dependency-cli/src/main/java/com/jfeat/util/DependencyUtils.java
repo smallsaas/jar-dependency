@@ -87,7 +87,7 @@ public class DependencyUtils {
                 names.add(zipEntry.getName().replace(FileUtils.LIB_JAR_DIR,""));
             }
             names.stream()
-                    .filter(s -> s.startsWith(FileUtils.LIB_JAR_DIR) && s.endsWith(FileUtils.JAR_SUFFIX))
+                    .filter(s -> s.endsWith(FileUtils.JAR_SUFFIX))
                     .collect(Collectors.toCollection(() -> dependencies));
             if (dependencies.isEmpty()) {
                 return getDependenciesByPomModel(FileUtils.getPomModelByJar(jarFile));

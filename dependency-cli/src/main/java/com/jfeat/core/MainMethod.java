@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import static java.util.function.Predicate.not;
 
@@ -80,9 +81,12 @@ public class MainMethod {
         File jarFile = new File(filePath);
         if (jarFile.exists() && jarFile.isFile()) {
             List<String> dependencies = DependencyUtils.getDependenciesByJar(jarFile);
-            dependencies = (dependencies != null && dependencies.isEmpty()) ? DependencyUtils.getDependenciesByPomModel(FileUtils.getPomModelByJar(jarFile)) : dependencies;
+            List<String> dependenciesByPomModel = DependencyUtils.getDependenciesByPomModel(FileUtils.getPomModelByJar(jarFile));
+            if(dependenciesByPomModel != null){
+                dependencies.addAll(dependenciesByPomModel);
+            }
             if (dependencies != null && !dependencies.isEmpty()) {
-                return dependencies;
+                return dependencies.stream().distinct().sorted().collect(Collectors.toList());
             } else {
                 System.out.println("NOT Found Dependency JAR file.");
             }
