@@ -70,6 +70,18 @@ public class DependencyUtils {
         return null;
     }
 
+    public static List<String> getDependencies(String path){
+        List<String> d;
+        if(path.endsWith(FileUtils.JAR_SUFFIX)){
+            File jarFile = new File(path);
+            d = DependencyUtils.getDependenciesByJar(jarFile);
+            d.addAll(DependencyUtils.getDependenciesByPomModel(FileUtils.getPomModelByJar(jarFile)));
+        }else{
+            d = DependencyUtils.getDependenciesByPom(new File(path.concat(File.separator).concat(FileUtils.POM)));
+        }
+        return d.stream().distinct().sorted().collect(Collectors.toList());
+    }
+
     /**
      * 通过jar包文件解压，获取其依赖包(lib)并生成依赖集合
      *
@@ -135,7 +147,7 @@ public class DependencyUtils {
             });
             return dependencies;
         }
-        return null;
+        return new ArrayList<>();
     }
 
     /**
